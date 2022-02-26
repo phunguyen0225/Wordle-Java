@@ -1,0 +1,28 @@
+Assign2: Due 11:59PM CT March 11
+
+***Please review the top part of ../hw1/hw1.txt***
+***Your chance of success greatly increases if you start very early. Your chance of failure increases if you start late. Please use as many reviews as you possibly can.***
+
+Please bring forward the practices, techniques, and tools you have learned so far. This includes: 
+Good code quality
+Lightweight design
+Minimum code
+Automated testing                                                         
+Code coverage
+Build files (I created them for you in assign1, but it's your turn now to practice and learn further)
+Change build.sh in your repository to point to assign2 instead of assign1
+
+In this assign2, we are going to start from where we left the code for assign1. Please copy over the things you need from assign1 to assign2. You can start the reviews right after you take this step. That way you can get moving on assign2 without any delay.
+
+There are two major tasks we plan to accomplish in this assignment.
+
+1. Get the code working well for the requirements in hw2.txt, if we have not already done so.
+2. Make make two significant updates to the game.
+
+A. When the game starts the word to guess will be picked in random from <https://agilec.cs.uh.edu/words>. Design in a way that if we decide to get the words from a different location in the future, then most of the code will not have to change, but new code may have to be written minimally to accommodate.
+
+B. When a user presses the "Guess" button, check if the users input is a word with correct spelling by making a query to <http://agilec.cs.uh.edu/spell?check=WORD> where WORD is replaced by the actual word the user enters. The site will return a true for correct spelling and false for an incorrect spelling. If the spelling is correct, continue to provide the feedback to the user for the word entered. If the guess is incorrect, display "Not a word." Design in a way that if we decide to check the spelling using a different service in the future, then most of the code will not have to change, but new code may have to be written minimally to accommodate.
+
+The user can continue to edit the current guess if the word they entered is not a correct spelling. They do not lose a turn if they entered an incorrect spelling. Disable the "Guess" button until the user changes the word after entering a wrong spelling.
+
+Please do not start on the "significant updates" part until we go over the application in the reviews and I give you a green signal that we can start on the updates part.
