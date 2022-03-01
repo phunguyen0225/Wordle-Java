@@ -1,10 +1,12 @@
 package game;
 
+import game.ui.WordleFrame;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 import static game.Wordle.MatchResponse.*;
 import static game.Wordle.Status;
+import static game.ui.WordleFrame.*;
 import java.util.function.*;
 import java.util.concurrent.atomic.*;
 
@@ -18,34 +20,34 @@ public class WordleTest {
   @Test
   void tallyGuessWithTarget() {
     assertAll(
-      () -> assertEquals(List.of(EXACT, EXACT, EXACT, EXACT, EXACT), Wordle.tally("FAVOR", "FAVOR")),
-      () -> assertEquals(List.of(NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH), Wordle.tally("FAVOR", "TESTS")),
-      () -> assertEquals(List.of(MATCH, EXACT, NO_MATCH, NO_MATCH, NO_MATCH), Wordle.tally("FAVOR", "RAPID")),
-      () -> assertEquals(List.of(NO_MATCH, EXACT, NO_MATCH, EXACT, EXACT), Wordle.tally("FAVOR", "MAYOR")),
-      () -> assertEquals(List.of(NO_MATCH, NO_MATCH, EXACT, NO_MATCH, EXACT), Wordle.tally("FAVOR", "RIVER")),
-      () -> assertEquals(List.of(MATCH, NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH), Wordle.tally("FAVOR", "AMAST")),
-      () -> assertEquals(List.of(EXACT, EXACT, EXACT, EXACT, EXACT), Wordle.tally("SKILL", "SKILL")),
-      () -> assertEquals(List.of(EXACT, NO_MATCH, EXACT, NO_MATCH, EXACT), Wordle.tally("SKILL", "SWIRL")),
-      () -> assertEquals(List.of(NO_MATCH, MATCH, NO_MATCH, NO_MATCH, EXACT), Wordle.tally("SKILL", "CIVIL")),
-      () -> assertEquals(List.of(EXACT, NO_MATCH, EXACT, NO_MATCH, NO_MATCH), Wordle.tally("SKILL", "SHIMS")),
-      () -> assertEquals(List.of(EXACT, MATCH, MATCH, EXACT, NO_MATCH), Wordle.tally("SKILL", "SILLY")),
-      () -> assertEquals(List.of(MATCH, NO_MATCH, MATCH, MATCH, NO_MATCH), Wordle.tally("SAGAS", "ABASE"))
+            () -> assertEquals(List.of(EXACT, EXACT, EXACT, EXACT, EXACT), Wordle.tally("FAVOR", "FAVOR")),
+            () -> assertEquals(List.of(NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH), Wordle.tally("FAVOR", "TESTS")),
+            () -> assertEquals(List.of(MATCH, EXACT, NO_MATCH, NO_MATCH, NO_MATCH), Wordle.tally("FAVOR", "RAPID")),
+            () -> assertEquals(List.of(NO_MATCH, EXACT, NO_MATCH, EXACT, EXACT), Wordle.tally("FAVOR", "MAYOR")),
+            () -> assertEquals(List.of(NO_MATCH, NO_MATCH, EXACT, NO_MATCH, EXACT), Wordle.tally("FAVOR", "RIVER")),
+            () -> assertEquals(List.of(MATCH, NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH), Wordle.tally("FAVOR", "AMAST")),
+            () -> assertEquals(List.of(EXACT, EXACT, EXACT, EXACT, EXACT), Wordle.tally("SKILL", "SKILL")),
+            () -> assertEquals(List.of(EXACT, NO_MATCH, EXACT, NO_MATCH, EXACT), Wordle.tally("SKILL", "SWIRL")),
+            () -> assertEquals(List.of(NO_MATCH, MATCH, NO_MATCH, NO_MATCH, EXACT), Wordle.tally("SKILL", "CIVIL")),
+            () -> assertEquals(List.of(EXACT, NO_MATCH, EXACT, NO_MATCH, NO_MATCH), Wordle.tally("SKILL", "SHIMS")),
+            () -> assertEquals(List.of(EXACT, MATCH, MATCH, EXACT, NO_MATCH), Wordle.tally("SKILL", "SILLY")),
+            () -> assertEquals(List.of(MATCH, NO_MATCH, MATCH, MATCH, NO_MATCH), Wordle.tally("SAGAS", "ABASE"))
     );
   }
 
   @Test
   void tallyInvalidGuess() {
     assertAll(
-      () -> assertEquals("Invalid guess", assertThrows(RuntimeException.class, () -> Wordle.tally("FAVOR", "FOR")).getMessage()),
-      () -> assertEquals("Invalid guess", assertThrows(RuntimeException.class, () -> Wordle.tally("FAVOR", "FERVER")).getMessage())
+            () -> assertEquals("Invalid guess", assertThrows(RuntimeException.class, () -> Wordle.tally("FAVOR", "FOR")).getMessage()),
+            () -> assertEquals("Invalid guess", assertThrows(RuntimeException.class, () -> Wordle.tally("FAVOR", "FERVER")).getMessage())
     );
   }
-  
+
   @Test
   void playFirstAttemptCorrectGuess() {
     Supplier<String> readGuess = () -> "FAVOR";
     AtomicBoolean displayCalled = new AtomicBoolean(false);
-    
+
     Display display = (int numberOfAttempts, Status status, List<Wordle.MatchResponse> response, String message) -> {
       assertEquals(1, numberOfAttempts);
       assertEquals(Status.WON, status);
@@ -55,7 +57,7 @@ public class WordleTest {
     };
 
     Wordle.play("FAVOR", readGuess, display);
-    
+
     assertTrue(displayCalled.get());
   }
 
@@ -94,8 +96,8 @@ public class WordleTest {
 
     var displayCallCount = new AtomicInteger(0);
     var expectedResults = new LinkedList<List<Object>>(List.of(
-      List.of(1, Status.IN_PROGRESS, List.of(NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH), ""),
-      List.of(2, Status.WON, List.of(EXACT, EXACT, EXACT, EXACT, EXACT), "Splendid")
+            List.of(1, Status.IN_PROGRESS, List.of(NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH, NO_MATCH), ""),
+            List.of(2, Status.WON, List.of(EXACT, EXACT, EXACT, EXACT, EXACT), "Splendid")
     ));
 
     Display display = (int numberOfAttempts, Status status, List<Wordle.MatchResponse> response, String message) -> {
@@ -321,6 +323,12 @@ public class WordleTest {
 
     assertFalse(guesses.isEmpty());
     assertEquals(6, readGuessCallCount.get());
+  }
+
+  @Test
+  void checkURLConnection() throws Exception {
+    List<String> listTest = List.of("FAVOR", "RIGOR", "SUGAR", "POWER", "POINT", "PIOUS", "GRIND", "NASTY", "WATER", "AVOID", "PAINT", "ABBEY", "SHIRE", "CYCLE", "SHORT", "WHICH", "YIELD", "AGILE", "BUILD", "BRICK");
+    assertEquals(listTest, WordleFrame.getListOfWords());
   }
 }
 
