@@ -1,0 +1,46 @@
+x canary test
+
+x tally for target FAVOR guess FAVOR
+x tally for target FAVOR guess TESTS
+x tally for target FAVOR guess RAPID
+x tally for target FAVOR guess MAYOR
+  
+x tally for target FAVOR guess FOR
+x tally for target FAVOR guess FERVER
+x tally for target FAVOR guess RIVER
+x tally for target FAVOR guess AMAST
+
+x tally for target SKILL guess SKILL
+x tally for target SKILL guess SWIRL
+x tally for target SKILL guess CIVIL
+x tally for target SKILL guess SHIMS
+x tally for target SKILL guess SILLY
+x tally for target SKILL guess SLICE
+
+x tally for target SAGAS guess ABASE
+
+x play for target FAVOR guess FAVOR
+
+x play first attempt with correct guess
+x play first attempt with invalid guess
+x play first attempt with non-winning guess
+
+x play second attempt with winning guess
+x play second attempt with non-winning guess
+
+x play third attempt with winning guess
+x play fourth attempt with winning guess
+x play fifth attempt with winning guess
+x play sixth attempt with winning guess
+x play sixth attempt with non-winning guess
+
+x verify that readGuess is not called after the win on second attempt
+x verify that readGuess is not called after loss on sixth attempt
+
+x play first attempt with FAVRO as guess calls display with 0 for numberOfAttempts, Status ERROR, message "not a word"
+x play second attempt with FVROA as guess calls display with 1 for numberOfAttempts, Status ERROR, message "not a word"
+
+x play first attempt with FAVRO but the spell checking blows up with a RuntimeException("Network error")
+
+x a getRandomWord gets a word from the WordListService
+x a getRandomWord gets another word from the WordListService

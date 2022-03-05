@@ -1,23 +1,27 @@
 package game.ui;
 
 import game.Display;
+import game.WordSpellingService;
 import game.Wordle;
 import game.Wordle.MatchResponse;
 import game.Wordle.Status;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-import java.net.*;
-import java.io.*;
 
 
 public class WordleFrame extends JFrame {
@@ -41,20 +45,20 @@ public class WordleFrame extends JFrame {
 
   public static void rowClear(int row) {
     IntStream.range(0, COLUMN)
-            .forEach(column -> boxes[row][column].setText(""));
+      .forEach(column -> boxes[row][column].setText(""));
   }
 
   public static String getWordAtPlayingRow() {
     return IntStream.range(0, COLUMN)
-            .mapToObj(index -> boxes[playingRowNumber][index].getText())
-            .collect(Collectors.joining());
+      .mapToObj(index -> boxes[playingRowNumber][index].getText())
+      .collect(Collectors.joining());
   }
 
   public static void setWordToRow(int row) {
     String finalWord = guessingWord.toUpperCase();
 
     IntStream.range(0,  finalWord.length())
-            .forEach(column -> boxes[row][column].setText(String.valueOf(finalWord.charAt(column))));
+      .forEach(column -> boxes[row][column].setText(String.valueOf(finalWord.charAt(column))));
   }
 
   public static Color getBoxColor(MatchResponse response) {
@@ -163,65 +167,78 @@ public class WordleFrame extends JFrame {
     }
   }
 
+  private static void handleCorrectSpelling (int numberOfAttempts, Status status, List<MatchResponse> response, String message) {
+    int row = numberOfAttempts - 1;
+
+    IntStream.range(0, COLUMN)
+      .forEach(column -> {
+        boxes[row][column].setBackground(getBoxColor(response.get(column)));
+        boxes[row][column].setOpaque(true);
+        boxes[row][column].setBorderPainted(false);
+      });
+
+    if (!Objects.equals(message, "")) {
+      JOptionPane.showMessageDialog(boxes[3][2], message);
+    }
+
+    if ((status == Status.IN_PROGRESS)) {
+      IntStream.range(0, COLUMN)
+              .forEach(column -> boxes[row + 1][column].setEnabled(true));
+    }
+    else {
+      frame.setFocusable(false);
+    }
+
+    playingRowNumber++;
+
+    guessingWord = "";
+  }
 
   private static class DisplayWordle implements Display {
     @Override
     public void call(int numberOfAttempts, Status status, List<MatchResponse> response, String message) {
-      int row = numberOfAttempts - 1;
-
-      IntStream.range(0, COLUMN)
-              .forEach(column -> {
-                boxes[row][column].setBackground(getBoxColor(response.get(column)));
-                boxes[row][column].setOpaque(true);
-                boxes[row][column].setBorderPainted(false);
-              });
-
-      if (!Objects.equals(message, "")) {
+      if (status == Status.ERROR) {
         JOptionPane.showMessageDialog(boxes[3][2], message);
       }
-
-      if ((status == Status.IN_PROGRESS)) {
-        IntStream.range(0, COLUMN)
-                .forEach(column -> boxes[row + 1][column].setEnabled(true));
-      }
       else {
-        frame.setFocusable(false);
+        handleCorrectSpelling(numberOfAttempts, status, response, message);
       }
-
-      playingRowNumber++;
-
-      guessingWord = "";
 
       countDownLatch = new CountDownLatch(1);
     }
   }
 
-  public static List<String> split(String str){
+  private static class WordSpellingWordle implements WordSpellingService {
+    @Override
+    public boolean isSpellingCorrect(String word) {
+      try {
+        URL theURL = new URL("http://agilec.cs.uh.edu/spell?check=" + word);
 
-    return Stream.of(str.split(", "))
-            .map (String::new)
-            .collect(Collectors.toList());
+        BufferedReader in = new BufferedReader(new InputStreamReader(theURL.openStream()));
+
+        String inputLine;
+        inputLine = in.readLine();
+        in.close();
+
+        return Objects.equals(inputLine, "true");
+      } catch (Exception ignored) {}
+
+      return false;
+    }
   }
 
   public static List<String> getListOfWords() throws Exception {
     URL url = new URL("https://agilec.cs.uh.edu/words");
     BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
-    String inputLine;
-    String line = null;
-
-    while ((inputLine = in.readLine()) != null) {
-      line = inputLine.substring(1, inputLine.length()-1);
-    }
-
+    String inputLine = in.readLine();
     in.close();
 
-    if (line == null) {
-      throw new RuntimeException("Empty list of words");
-    }
-    else {
-      return split(line);
-    }
+    Matcher matcher = Pattern.compile("[a-zA-Z]+").matcher(inputLine);
+
+    return matcher.results()
+      .map(value -> matcher.group())
+      .collect(Collectors.toList());
   }
 
   public static void main(String[] args) throws Exception {
@@ -236,11 +253,13 @@ public class WordleFrame extends JFrame {
 
     frame.setSize(500, 500);
     frame.setVisible(true);
-
+    
     DisplayWordle display = new DisplayWordle();
 
     ReadGuess readGuess = new ReadGuess();
 
-    Wordle.play(target, readGuess, display);
+    WordSpellingWordle wordSpellingWordle = new WordSpellingWordle();
+
+    Wordle.play(target, readGuess, display, wordSpellingWordle);
   }
 }
