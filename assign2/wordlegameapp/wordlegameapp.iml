@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../../../../../../Self Learning/Java/byte-buddy-1.12.7.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../../../../../Self Learning/Java/byte-buddy-1.12.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../../../../../../Self Learning/Java/byte-buddy-agent-1.12.7.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../../../../../Self Learning/Java/byte-buddy-agent-1.12.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -46,7 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../../../../../../Self Learning/Java/mockito-core-4.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../../../../../Self Learning/Java/mockito-core-4.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -55,7 +55,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../../../../../../Self Learning/Java/objenesis-3.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../../../../../Self Learning/Java/objenesis-3.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

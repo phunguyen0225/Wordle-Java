@@ -1,5 +1,5 @@
 package game;
 
-public interface WordSpellingService {
+public interface SpellChecker {
   boolean isSpellingCorrect(String word);
 }

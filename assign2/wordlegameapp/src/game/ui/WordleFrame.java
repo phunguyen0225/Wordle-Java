@@ -1,7 +1,7 @@
 package game.ui;
 
 import game.Display;
-import game.WordSpellingService;
+import game.SpellChecker;
 import game.Wordle;
 import game.Wordle.MatchResponse;
 import game.Wordle.Status;
@@ -208,7 +208,7 @@ public class WordleFrame extends JFrame {
     }
   }
 
-  private static class WordSpellingWordle implements WordSpellingService {
+  private static class WordSpellingWordle implements SpellChecker {
     @Override
     public boolean isSpellingCorrect(String word) {
       try {

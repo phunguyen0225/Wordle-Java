@@ -44,7 +44,7 @@ public interface Wordle {
     } 
   }
 
-  public static List<MatchResponse> tally(String target, String guess) {
+  static List<MatchResponse> tally(String target, String guess) {
     verifyLength(target, guess);
 
     return IntStream.range(0, WORD_SIZE)
@@ -70,29 +70,28 @@ public interface Wordle {
     return status == Status.LOSE ? String.format("It was %s, better luck next time", target) : "";
   }
 
-  public static void play(String target, Supplier<String> readGuess, Display display, WordSpellingService wordSpellingService) {
+  static void play(String target, Supplier<String> readGuess, Display display, SpellChecker spellChecker) {
     for (int attempts = 1; attempts <= MAX_TRIES; attempts++) {
 
       String guess = readGuess.get();
 
       List<MatchResponse> response = null;
-      Status status;
-      String message;
+      Status status = Status.ERROR;
+      String message = "not a word";
 
       try {
-        if (wordSpellingService.isSpellingCorrect(guess)) {
+        if (spellChecker.isSpellingCorrect(guess)) {
           response = tally(target, guess);
           status = determineStatus(attempts, response);
           message = getMessage(attempts, status, target);
 
         } else {
           attempts = attempts - 1;
-          status = Status.ERROR;
-          message = "not a word";
         }
 
-      } catch (Exception ex) {
-        throw new RuntimeException(String.format("Error connecting to the URL: %s", ex.getMessage()));
+      } catch (Exception exception) {
+        attempts = attempts - 1;
+        message = exception.getMessage();
       }
 
       display.call(attempts, status, response, message);
@@ -103,14 +102,10 @@ public interface Wordle {
     }
   }
 
-  public static String getRandomWord(WordListService wordListService, int seed) {
+  static String getRandomWord(SampleWords wordListService) {
+    List<String> words = wordListService.fetchWords();
 
-    List<String> listTest = wordListService.getListOfWords();
-
-    Random random = new Random();
-    random.setSeed(seed);
-
-    return listTest.get(random.nextInt(listTest.size()));
+    return words.get(new Random().nextInt(words.size()));
   }
 }
 

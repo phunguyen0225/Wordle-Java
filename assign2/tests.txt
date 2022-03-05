@@ -43,4 +43,4 @@ x play second attempt with FVROA as guess calls display with 1 for numberOfAttem
 x play first attempt with FAVRO but the spell checking blows up with a RuntimeException("Network error")
 
 x a getRandomWord gets a word from the WordListService
-x a getRandomWord gets another word from the WordListService
+x call getRandomWord twice and verify the words returned are different
