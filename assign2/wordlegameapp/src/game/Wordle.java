@@ -1,8 +1,8 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -28,7 +28,7 @@ public interface Wordle {
 
   private static MatchResponse tallyForPosition(int position, String target, String guess) {
     if (target.charAt(position) == guess.charAt(position)) {
-        return MatchResponse.EXACT;
+      return MatchResponse.EXACT;
     }
 
     char theLetter = guess.charAt(position);
@@ -37,11 +37,11 @@ public interface Wordle {
     return (countNumberOfOccurrencesUntilPosition((int) nonExactPosition, target, theLetter) >= countNumberOfOccurrencesUntilPosition(position, guess, theLetter))
       ? MatchResponse.MATCH : MatchResponse.NO_MATCH;
   }
-  
+
   private static void verifyLength(String target, String guess) {
     if (target.length() != guess.length()) {
       throw new RuntimeException("Invalid guess");
-    } 
+    }
   }
 
   static List<MatchResponse> tally(String target, String guess) {
@@ -66,7 +66,7 @@ public interface Wordle {
     if (status == Status.WON) {
       return winMessage.get(attempt - 1);
     }
-    
+
     return status == Status.LOSE ? String.format("It was %s, better luck next time", target) : "";
   }
 
@@ -78,9 +78,21 @@ public interface Wordle {
       List<MatchResponse> response = null;
       Status status = Status.ERROR;
       String message = "not a word";
+      boolean checkSpellingCorrectFlag = false;
+      boolean checkNetworkErrorFlag = false;
 
       try {
-        if (spellChecker.isSpellingCorrect(guess)) {
+        checkSpellingCorrectFlag = spellChecker.isSpellingCorrect(guess);
+
+      } catch (Exception e) {
+        attempts = attempts - 1;
+        message = e.getMessage();
+        checkNetworkErrorFlag = true;
+      }
+
+      if (!checkNetworkErrorFlag) {
+        if (checkSpellingCorrectFlag) {
+
           response = tally(target, guess);
           status = determineStatus(attempts, response);
           message = getMessage(attempts, status, target);
@@ -88,10 +100,6 @@ public interface Wordle {
         } else {
           attempts = attempts - 1;
         }
-
-      } catch (Exception exception) {
-        attempts = attempts - 1;
-        message = exception.getMessage();
       }
 
       display.call(attempts, status, response, message);
@@ -103,9 +111,10 @@ public interface Wordle {
   }
 
   static String getRandomWord(SampleWords wordListService) {
-    List<String> words = wordListService.fetchWords();
+    List<String> words = new ArrayList<>(wordListService.fetchWords());
+    Collections.shuffle(words);
 
-    return words.get(new Random().nextInt(words.size()));
+    return words.get(0);
   }
 }
 

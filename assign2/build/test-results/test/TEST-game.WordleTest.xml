@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="game.WordleTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2022-03-09T20:34:23" hostname="Phus-MBP.attlocal.net" time="0.11">
+  <properties/>
+  <testcase name="canary()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="getAWordFromWordListService()" classname="game.WordleTest" time="0.024"/>
+  <testcase name="playFirstAttemptInvalidGuess()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="playFourthAttemptCorrectGuess()" classname="game.WordleTest" time="0.006"/>
+  <testcase name="getRandomWordPassNetworkErrorException()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="tallyGuessWithTarget()" classname="game.WordleTest" time="0.007"/>
+  <testcase name="playSecondAttemptCorrectGuess()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="playFifthAttemptCorrectGuess()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="playSecondAttemptInCorrectSpellingWithFVROA()" classname="game.WordleTest" time="0.027"/>
+  <testcase name="tallyInvalidGuess()" classname="game.WordleTest" time="0.003"/>
+  <testcase name="verifyReadGuessNotCalledAfterWonOnSecondAttempt()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="playFirstAttemptCorrectGuess()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="playSecondAttemptInCorrectGuess()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="verifyReadGuessNotCalledAfterLossOnSixthAttempt()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="playFirstAttemptNetworkErrorWithFAVRO()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="playSixthAttemptCorrectGuess()" classname="game.WordleTest" time="0.002"/>
+  <testcase name="playThirdAttemptCorrectGuess()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="playSixthAttemptInCorrectGuess()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="playFirstAttemptInCorrectGuess()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="getAnotherWordFromListService()" classname="game.WordleTest" time="0.001"/>
+  <testcase name="playFirstAttemptInCorrectSpellingWithFAVRO()" classname="game.WordleTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

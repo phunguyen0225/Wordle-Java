@@ -1,8 +1,6 @@
 package game.ui;
 
-import game.Display;
-import game.SpellChecker;
-import game.Wordle;
+import game.*;
 import game.Wordle.MatchResponse;
 import game.Wordle.Status;
 
@@ -10,19 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 
 public class WordleFrame extends JFrame {
   private static JFrame frame;
@@ -183,7 +174,7 @@ public class WordleFrame extends JFrame {
 
     if ((status == Status.IN_PROGRESS)) {
       IntStream.range(0, COLUMN)
-              .forEach(column -> boxes[row + 1][column].setEnabled(true));
+        .forEach(column -> boxes[row + 1][column].setEnabled(true));
     }
     else {
       frame.setFocusable(false);
@@ -208,42 +199,7 @@ public class WordleFrame extends JFrame {
     }
   }
 
-  private static class WordSpellingWordle implements SpellChecker {
-    @Override
-    public boolean isSpellingCorrect(String word) {
-      try {
-        URL theURL = new URL("http://agilec.cs.uh.edu/spell?check=" + word);
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(theURL.openStream()));
-
-        String inputLine;
-        inputLine = in.readLine();
-        in.close();
-
-        return Objects.equals(inputLine, "true");
-      } catch (Exception ignored) {}
-
-      return false;
-    }
-  }
-
-  public static List<String> getListOfWords() throws Exception {
-    URL url = new URL("https://agilec.cs.uh.edu/words");
-    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-
-    String inputLine = in.readLine();
-    in.close();
-
-    Matcher matcher = Pattern.compile("[a-zA-Z]+").matcher(inputLine);
-
-    return matcher.results()
-      .map(value -> matcher.group())
-      .collect(Collectors.toList());
-  }
-
-  public static void main(String[] args) throws Exception {
-    String target = getListOfWords().get(new Random().nextInt(getListOfWords().size()));
-
+  public static void main(String[] args) {
     frame = new WordleFrame();
 
     frame.setTitle("Wordle Game");
@@ -253,13 +209,16 @@ public class WordleFrame extends JFrame {
 
     frame.setSize(500, 500);
     frame.setVisible(true);
-    
-    DisplayWordle display = new DisplayWordle();
+
+    SampleWords words = new AgileCSSSampleWords();
+    String target = Wordle.getRandomWord(words);
 
     ReadGuess readGuess = new ReadGuess();
 
-    WordSpellingWordle wordSpellingWordle = new WordSpellingWordle();
+    DisplayWordle display = new DisplayWordle();
 
-    Wordle.play(target, readGuess, display, wordSpellingWordle);
+    SpellChecker spellChecker = new AgileCSSpellChecker();
+
+    Wordle.play(target, readGuess, display, spellChecker);
   }
 }

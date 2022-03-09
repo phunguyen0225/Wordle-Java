@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 public class WordleTest {
   SpellChecker spellChecker = word -> true;
 
-  List<String> listOfWords = List.of("FAVOR", "RIGOR", "SUGAR", "POWER", "POINT", "PIOUS", "GRIND");
+  List<String> words = List.of("FAVOR", "RIGOR", "SUGAR", "POWER", "POINT", "PIOUS", "GRIND", "NASTY", "WATER", "AVOID");
 
   @Test
   public void canary() {
@@ -73,7 +73,7 @@ public class WordleTest {
   void playFirstAttemptInvalidGuess() {
     Supplier<String> readGuess = () -> "FOR";
 
-    assertThrows(RuntimeException.class, () -> Wordle.play("FAVOR", readGuess, null, spellChecker), "Invalid guess");
+    assertEquals("Invalid guess", assertThrows(RuntimeException.class, () -> Wordle.play("FAVOR", readGuess, null, spellChecker)).getMessage());
   }
 
   @Test
@@ -395,41 +395,48 @@ public class WordleTest {
   void playFirstAttemptNetworkErrorWithFAVRO() {
     var guesses = new LinkedList<>(List.of("FAVRO", "FAVOR"));
     Supplier<String> readGuess = guesses::pop;
+    AtomicBoolean displayCalled = new AtomicBoolean(false);
 
     SpellChecker spellChecker = Mockito.mock(SpellChecker.class);
 
-    when(spellChecker.isSpellingCorrect("FAVRO")).thenThrow(new RuntimeException("Network error"));
+    when(spellChecker.isSpellingCorrect("FAVRO")).thenThrow(new RuntimeException("Network Error"));
     when(spellChecker.isSpellingCorrect("FAVOR")).thenReturn(true);
 
     Display display = (int numberOfAttempts, Status status, List<Wordle.MatchResponse> response, String message) -> {
       if (numberOfAttempts == 0) {
         assertEquals(0, numberOfAttempts);
         assertEquals(Status.ERROR, status);
-        assertEquals("Network error", message);
+        assertEquals("Network Error", message);
+        displayCalled.set(true);
       }
     };
 
     Wordle.play("FAVOR", readGuess, display, spellChecker);
+
+    assertTrue(displayCalled.get());
   }
 
   @Test
   void getAWordFromWordListService() {
     SampleWords sampleWords = Mockito.mock(SampleWords.class);
-    when(sampleWords.fetchWords()).thenReturn(listOfWords);
+    when(sampleWords.fetchWords()).thenReturn(words);
 
-    assertTrue(listOfWords.contains(Wordle.getRandomWord(sampleWords)));
+    assertTrue(words.contains(Wordle.getRandomWord(sampleWords)));
   }
 
   @Test
   void getAnotherWordFromListService() {
     SampleWords sampleWords = Mockito.mock(SampleWords.class);
-    when(sampleWords.fetchWords()).thenReturn(listOfWords);
+    when(sampleWords.fetchWords()).thenReturn(words);
 
-    String word1 = Wordle.getRandomWord(sampleWords);
-    String word2 = Wordle.getRandomWord(sampleWords);
-    assertNotSame(word1, word2);
+    assertNotSame(Wordle.getRandomWord(sampleWords), Wordle.getRandomWord(sampleWords));
+  }
+
+  @Test
+  void getRandomWordPassNetworkErrorException() {
+    SampleWords sampleWords = Mockito.mock(SampleWords.class);
+    when(sampleWords.fetchWords()).thenThrow(new RuntimeException("Network Error"));
+
+    assertThrows(RuntimeException.class, () -> Wordle.getRandomWord(sampleWords), "Network Error");
   }
 }
-
-
-

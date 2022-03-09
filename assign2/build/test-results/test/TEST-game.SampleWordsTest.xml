@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="game.SampleWordsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-03-09T20:34:21" hostname="Phus-MBP.attlocal.net" time="1.84">
+  <properties/>
+  <testcase name="getResponseFromURLAndReturnStringSampleWords()" classname="game.SampleWordsTest" time="1.81"/>
+  <testcase name="fetchWordsReturnListSampleWords()" classname="game.SampleWordsTest" time="0.02"/>
+  <testcase name="fetchWordsReturnExceptionNetworkErrorSampleWords()" classname="game.SampleWordsTest" time="0.006"/>
+  <testcase name="splitStringReturnListFromSampleWords()" classname="game.SampleWordsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
