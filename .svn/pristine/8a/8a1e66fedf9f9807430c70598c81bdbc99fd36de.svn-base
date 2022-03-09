@@ -1,5 +1,0 @@
-#!/bin/bash
-cd assign2/wordlegameapp/src/game/ui
-
-javac WordleFrame.java
-java WordleFrame
