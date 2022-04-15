@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d5dcb7e-4e94-410a-8970-1eb2efabe684" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/AgileCSSSampleWords.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/AgileCSSpellChecker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/game/SampleWordsTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/game/SpellCheckerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/Display.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/SampleWords.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/SpellChecker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/Wordle$MatchResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/Wordle$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/Wordle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/ui/WordleFrame$CharacterHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/ui/WordleFrame$DisplayWordle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/ui/WordleFrame$PressButtonLatch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/ui/WordleFrame$ReadGuess.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/ui/WordleFrame$WordSpellingWordle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/wordlegameapp/game/ui/WordleFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/wordlegameapp/game/WordleTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Wordle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Wordle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/ui/WordleFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/ui/WordleFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/game/WordleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/game/WordleTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wordlegameapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wordlegameapp.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +79,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SampleWordsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wordlegameapp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game" />
+      <option name="MAIN_CLASS_NAME" value="game.SampleWordsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SpellCheckerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wordlegameapp" />
       <extension name="coverage">
@@ -131,22 +124,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WordleTest.getAnotherWordFromListService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="wordlegameapp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.WordleTest" />
-      <option name="METHOD_NAME" value="getAnotherWordFromListService" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="game in wordlegameapp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wordlegameapp" />
       <extension name="coverage">
@@ -162,19 +139,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.WordleFrame" />
       <item itemvalue="JUnit.WordleTest" />
-      <item itemvalue="JUnit.WordleTest.getAnotherWordFromListService" />
       <item itemvalue="JUnit.SpellCheckerTest" />
       <item itemvalue="JUnit.game in wordlegameapp" />
-      <item itemvalue="Application.WordleFrame" />
+      <item itemvalue="JUnit.SampleWordsTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.WordleFrame" />
+        <item itemvalue="JUnit.WordleTest" />
+        <item itemvalue="JUnit.SampleWordsTest" />
         <item itemvalue="JUnit.game in wordlegameapp" />
         <item itemvalue="JUnit.SpellCheckerTest" />
-        <item itemvalue="JUnit.WordleTest" />
-        <item itemvalue="JUnit.WordleTest.getAnotherWordFromListService" />
       </list>
     </recent_temporary>
   </component>
